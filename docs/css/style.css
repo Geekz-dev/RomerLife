@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+body {
+    margin: 0px;
+    font-family: sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/**
+ * Header
+*/
+header {
+    border-bottom: 1px solid #AAA;
+    height: 50px;
+}
+
+header img {
+    display: none;/* 画像がないので取りあえず非表示 */
+    height: 50px;
+}
+
+
+/**
+ * Side-Contents
+*/
+#side-contents {
+    border-right: 1px solid #AAA;
+    width: 200px;
+    overflow: auto;
+}
+
+h2 {
+    border: solid #AAA;
+    border-width: 1px 0px;
+    text-align: center;
+    padding: 5px;
+    margin: 5px 0px;
+}
+
+/* Favorite */
+#favorite {
+    min-height: 100px;
+}
+
+h3 {
+    border: solid #AAA;
+    border-width: 0 0 1px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+#favorite a {
+    background: #F5F5F5;
+    border: 1px solid #AAA;
+    color: #DA5;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    padding: 2px;
+}
+
+#favorite li {
+    border: solid #AAA;
+    border-width: 0 0 1px;
+    padding: 7px;
+}
+
+/* Category */
+#category ul {
+}
+
+/* Footer */
+footer {
+    border: solid #AAA;
+    border-width: 1px 0 0 0;
+}
+

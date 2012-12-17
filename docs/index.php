@@ -1,0 +1,35 @@
+<?php
+/**
+ *  RomerLife
+ *  @author R.SkuLL
+ *  copyright (c) Geekz Web Development
+*/
+
+$ua = $_SERVER['HTTP_USER_AGENT'];
+
+$os_mobile_list = array(
+    '/Windows Phone/',
+    '/Windows Phone OS/',
+    '/iPhone OS/',
+    '/Android/',
+    '/BlackBerry/'
+);
+
+$media = 'pc';
+foreach ($os_mobile_list as $val) {
+    if (preg_match($val, $ua)) {
+       $media = 'smart';
+       break;
+    }
+}
+
+// Header
+require_once 'header.php';
+
+// Body
+if ($media == 'smart') {
+    require_once 'mobile/index.php';
+} else {
+    require_once 'pc/index.php';
+}
+
