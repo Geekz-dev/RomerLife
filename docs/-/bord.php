@@ -1,6 +1,6 @@
 <?php
 /**
- *  RomerLife Thread API
+ *  RomerLife Bord API
  *
  *  @version 1.0
  *  @author R.SkuLL
@@ -9,8 +9,7 @@
 */
 
 require_once '../../classes/2ch/API.class.php';
-require_once '../../classes/2ch/Thread.class.php';
+require_once '../../classes/2ch/Bord.class.php';
 
-$res = new Thread();
+$res = new Bord();
 $res->execute();
-

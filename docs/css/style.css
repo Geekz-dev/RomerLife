@@ -23,6 +23,9 @@ header img {
     height: 50px;
 }
 
+#title {
+    width: 100%;
+}
 
 /**
  * Side-Contents

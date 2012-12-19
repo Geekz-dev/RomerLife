@@ -1,8 +1,9 @@
 <?php
 /**
  *  RomerLife
+ *
  *  @author R.SkuLL
- *  copyright (c) Geekz Web Development
+ *  Copyright (c) 2013 Geekz Web Development
 */
 
 $ua = $_SERVER['HTTP_USER_AGENT'];

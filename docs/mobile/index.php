@@ -1,7 +1,7 @@
 <body>
 
     <!--[ Message ]-->
-    <div id="message">メッセージテスト</div>
+    <div id="message"></div>
     <!--[ End Message ]-->
 
     <!--[ Header ]-->
@@ -16,7 +16,25 @@
         <div id="loading1"><img src="../images/loading_1.gif" alt="loading..."></div>
 
         <!--[ Main ]-->
-        <div id="contents"></div>
+        <div id="contents">
+
+            <!--[ TopHome ]-->
+            <div id="tophome"></div>
+            <!--[ End TopHome ]-->
+
+            <!--[ Category ]-->
+            <div id="category"></div>
+            <!--[ End Category ]-->
+
+            <!--[ Threads ]-->
+            <div id="threads"></div>
+            <!--[ End Threds ]-->
+
+            <!--[ Thread ]-->
+            <div id="thread"></div>
+            <!--[ End Thread ]-->
+
+        </div>
         <!--[ End Main ]-->
 
 

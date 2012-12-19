@@ -1,3 +1,1 @@
-<a href="#cate">
-    <img src="../images/title.png" alt="RomerLife">
-</a>
+<a href="#cate" id=""title ><img src="../images/title.png" alt="RomerLife"></a>

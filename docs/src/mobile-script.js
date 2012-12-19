@@ -1,15 +1,19 @@
 /**
  *  RomerLife
+ *  Mobile Script
+ *
  *  @version 1.0
  *  @author R.SkuLL
+ *
+ *  Copyright (c) 2013 Geekz Web Development
 */
 (function () {
 
     var ss = sessionStorage, ls = localStorage;
 
     // API
-    var THREAD_API ='/-/thread.php',
-    RES_API = '/-/res.php',
+    var BORD_API ='/-/bord.php',
+    THREAD_API = '/-/thread.php',
     UPDATE_API ='/-/update.php';
 
     /**
@@ -22,8 +26,8 @@
     var mode = 0;
     if ( mode !== 0 ) {
         if ( mode != 2 ) {
-            THREAD_API ='./debug/thread.json',
-            RES_API = './debug/res.json',
+            BORD_API ='./debug/bord.json',
+            THREAD_API = './debug/thread.json',
             UPDATE_API ='./debug/update.json';
         }
         if ( mode == 2 || mode == 3 ) {
@@ -47,12 +51,15 @@
 
         loadPage: function () {
 
-            $( '#contents' ).html( '' );
+            $( window ).scrollTop( 0 );
             $( '#message' ).hide();
-            $( '#contents' ).scrollTop( 0 );
             $( '#menu' ).hide();
-            view.loading();
+            $( '#tophome' ).hide();
+            $( '#category' ).hide();
+            $( '#threads' ).hide();
+            $( '#thread' ).hide();
 
+            view.loading();
             var hash = getHash( true );
 
             if ( hash[ 0 ] != '' ) $( '#menu' ).show();
@@ -60,19 +67,24 @@
             // TOP
             if ( hash[ 0 ] == '' ) {
 
+                $( '#menu' ).show();
+                $( '#tophome' ).show();
                 var temp = './template/topHome/topHome.tpl';
                 templateModel.loadTemplate( temp, 'topHome', function ( tpl ) {
                     json = null;
                     view.topHome( json, tpl );
+                    view.loading( false );
                 });
 
             } else // Category
             if ( hash[ 0 ] == 'cate' )  {
 
+                $( '#category' ).show();
                 var temp = './template/category/category.tpl';
                 templateModel.loadTemplate( temp, 'category', function ( tpl ) {
                     json = null;
                     view.category( json, tpl );
+                    view.loading( false );
                 });
 
             } else
@@ -81,25 +93,24 @@
                 // スレッド詳細
                 if ( hash[ 3 ] != null ) {
 
+                    $( '#thread' ).show();
                     var temp = './template/res/res.tpl';
                     templateModel.loadTemplate( temp, 'res', function ( tpl ) {
                         var param = { sd: hash[ 1 ], bord: hash[ 2 ], dat: hash[ 3 ] }
-                        apiModel.loadJson( RES_API, param, function ( json ) {
+                        apiModel.loadJson( THREAD_API, param, function ( json ) {
 
                             if ( json.Status == 'ok' ) {
                                 view.res( json, tpl );
                             } else
                             if ( json.Status == 'over 1000 Thread' ) {
                                 view.message( 'スレッドが1000を越えました', true );
-                                view.loading( false );
                             } else
                             if ( json.Status == 'Dat not found' ) {
                                 view.message( 'ダット落ちしています', true );
-                                view.loading( false );
                             } else {
                                 view.message( '取得できませんでした', true );
-                                view.loading( false );
                             }
+                            view.loading( false );
 
                         });
                     });
@@ -107,17 +118,18 @@
                 } else // スレッド一覧
                 if ( hash[ 2 ] != null ){
 
+                    $( '#threads' ).show();
                     var temp = './template/thread/thread.tpl';
                     templateModel.loadTemplate( temp, 'thread', function ( tpl ) {
                         var param = { sd: hash[ 1 ], bord: hash[ 2 ] }
-                        apiModel.loadJson( THREAD_API, param, function ( json ) {
+                        apiModel.loadJson( BORD_API, param, function ( json ) {
 
                             if ( json.Status == 'ok' ) {
-                                view.thread( json, tpl );
+                                view.thread( json, tpl, 20 );
                             } else {
                                 view.message( '取得できませんでした', true );
-                                view.loading( false );
                             }
+                            view.loading( false );
 
                         });
                     });
@@ -152,15 +164,13 @@
                         if ( json.Status == 'update ok' ) {
                             view.res( json, tpl, true );
                             view.message( '更新しました', true );
-                            view.loading( false );
                         } else
                         if ( json.Status == 'no update' ) {
                             view.message( '更新なし', true );
-                            view.loading( false );
                         } else {
                             view.message( '更新中にエラーが発生しました。', true );
-                            view.loading( false );
                         }
+                        view.loading( false );
 
                     }, true);
                 });
@@ -172,11 +182,12 @@
                 temp = './template/mobile/thread.tpl';
                 templateModel.loadTemplate( temp, 'thread', function ( tpl ) {
                     var param = { sd: hash[ 1 ], bord: hash[ 2 ], dat: hash[ 3 ] }
-                    apiModel.loadJson( THREAD_API, param, function ( json ) {
+                    apiModel.loadJson( BORD_API, param, function ( json ) {
 
                         if ( json.Status == 'ok' ) {
                             view.thread( json, tpl );
                             view.message( '更新しました', true );
+                            view.loading( false );
                         } else {
                             view.message( '取得できませんでした', true );
                             view.loading( false );
@@ -443,41 +454,36 @@
         },
 
         topHome: function ( json, tpl ) {
-            $( '#contents' ).html( tpl );
-            view.loading( false );
+            $( '#tophome' ).html( tpl );
         },
 
         category: function ( json, tpl ) {
-            $( '#contents' ).html( tpl );
+            $( '#category' ).html( tpl );
             $( '#header' ).html( 'RomerLife' );
             view.cateHistory();
             view.thHistory();
-            view.loading( false );
         },
 
-        thread: function ( json, tpl ) {
+        thread: function ( json, tpl, limit ) {
 
-            var compiled = _.template( tpl ),
-            list = $( '<div id="threads"></div>' );
+            var compiled = _.template( tpl );
             $( '#header' ).text( json.bord );
             $.each( json.thread, function( i, val ) {
                 html = compiled({
                     title: val.title,
                     url: apiModel.makeHash( val.url ),
                     all: val.all,
-                    createdAt: val.createdAt
+                    createdAt: val.createdA
                 });
-                list.append( html );
+                $( '#threads' ).append( html );
+                if ( i >= limit ) return false;
             });
-            $( '#contents' ).html( list );
-            view.loading( false );
 
         },
 
         res: function ( json, tpl, update ) {
 
-            var compiled = _.template( tpl ),
-            list = $( '<div id="thread"></div>' );
+            var compiled = _.template( tpl );
             if ( !update ) $( '#header' ).text( json.title );
             $.each( json.contents, function ( i, val ) {
                 html = compiled({
@@ -487,18 +493,9 @@
                     createdAt: val.createdAt,
                     userId: val.id
                 });
-                list.append( html );
-                view.loading( false );
+                if ( update ) apiModel.margeRes( json );
+                $( '#thread' ).append( html );
             });
-
-            // Updateだったら追加
-            if ( update ) {
-                apiModel.margeRes( json );
-                $( '#contents' ).append( list );
-            } else {
-                $( '#contents' ).html( list );
-            }
-            view.loading( false );
 
         },
 
@@ -592,6 +589,9 @@
         // init
         router.loadPage();
 
+        // Bottom Event
+        $(window).bottom();
+
         // Hash Event
         tm.HashObserver.enable();
         document.addEventListener( 'changehash', function ( e ) {
@@ -608,6 +608,8 @@
             router.deleteData( ss );
             router.deleteData( ls );
         });
+
+        // Load
 
     });
 
