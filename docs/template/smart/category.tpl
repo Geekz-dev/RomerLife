@@ -1016,4 +1016,3 @@
 
 </div>
 <!--[ End Category ]-->
-<script src="template/category/src/script.js"></script>

@@ -26,9 +26,9 @@
             <div id="category"></div>
             <!--[ End Category ]-->
 
-            <!--[ Threads ]-->
-            <div id="threads"></div>
-            <!--[ End Threds ]-->
+            <!--[ Bord ]-->
+            <div id="bord"></div>
+            <!--[ End Bord ]-->
 
             <!--[ Thread ]-->
             <div id="thread"></div>

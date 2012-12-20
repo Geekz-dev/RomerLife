@@ -52,24 +52,21 @@
         loadPage: function () {
 
             $( window ).scrollTop( 0 );
-            $( '#message' ).hide();
-            $( '#menu' ).hide();
-            $( '#tophome' ).hide();
-            $( '#category' ).hide();
-            $( '#threads' ).hide();
-            $( '#thread' ).hide();
-
+            view.init();
             view.loading();
+
             var hash = getHash( true );
 
-            if ( hash[ 0 ] != '' ) $( '#menu' ).show();
+            if ( hash[ 0 ] != '' ) {
+                $( '#header' ).show();
+                $( '#menu' ).show();
+            }
 
             // TOP
             if ( hash[ 0 ] == '' ) {
 
-                $( '#menu' ).show();
                 $( '#tophome' ).show();
-                var temp = './template/topHome/topHome.tpl';
+                var temp = './template/smart/topHome.tpl';
                 templateModel.loadTemplate( temp, 'topHome', function ( tpl ) {
                     json = null;
                     view.topHome( json, tpl );
@@ -80,7 +77,7 @@
             if ( hash[ 0 ] == 'cate' )  {
 
                 $( '#category' ).show();
-                var temp = './template/category/category.tpl';
+                var temp = './template/smart/category.tpl';
                 templateModel.loadTemplate( temp, 'category', function ( tpl ) {
                     json = null;
                     view.category( json, tpl );
@@ -94,7 +91,7 @@
                 if ( hash[ 3 ] != null ) {
 
                     $( '#thread' ).show();
-                    var temp = './template/res/res.tpl';
+                    var temp = './template/smart/thread.tpl';
                     templateModel.loadTemplate( temp, 'res', function ( tpl ) {
                         var param = { sd: hash[ 1 ], bord: hash[ 2 ], dat: hash[ 3 ] }
                         apiModel.loadJson( THREAD_API, param, function ( json ) {
@@ -118,9 +115,9 @@
                 } else // スレッド一覧
                 if ( hash[ 2 ] != null ){
 
-                    $( '#threads' ).show();
-                    var temp = './template/thread/thread.tpl';
-                    templateModel.loadTemplate( temp, 'thread', function ( tpl ) {
+                    $( '#bord' ).show();
+                    var temp = './template/smart/bord.tpl';
+                    templateModel.loadTemplate( temp, 'bord', function ( tpl ) {
                         var param = { sd: hash[ 1 ], bord: hash[ 2 ] }
                         apiModel.loadJson( BORD_API, param, function ( json ) {
 
@@ -155,8 +152,8 @@
             if ( hash[ 3 ] != null ) {
 
                 view.loading();
-                temp = './template/mobile/res.tpl';
-                templateModel.loadTemplate( temp, 'res', function ( tpl ) {
+                temp = './template/smart/thread.tpl';
+                templateModel.loadTemplate( temp, 'thread', function ( tpl ) {
                     var lastId = parseInt( $( '.res-num:last' ).text() ),
                     param = { sd: hash[ 1 ], bord: hash[ 2 ], dat: hash[ 3 ], maxId: lastId }
                     apiModel.loadJson( UPDATE_API, param, function ( json ) {
@@ -179,8 +176,8 @@
             if ( hash[ 2 ] != null ) {
 
                 view.loading();
-                temp = './template/mobile/thread.tpl';
-                templateModel.loadTemplate( temp, 'thread', function ( tpl ) {
+                temp = './template/smart/bord.tpl';
+                templateModel.loadTemplate( temp, 'bord', function ( tpl ) {
                     var param = { sd: hash[ 1 ], bord: hash[ 2 ], dat: hash[ 3 ] }
                     apiModel.loadJson( BORD_API, param, function ( json ) {
 
@@ -243,7 +240,7 @@
 
             if ( json.Status == 'ok' ) {
                 var hashURL = getHash(), key = storage.cacheKey(),
-                type = 'cate', title = json.bord;
+                type = 'bord', title = json.bord;
                 if ( json.contents ) type = 'thread', title = json.title;
                 apiModel.setData( json );
                 historyModel.setData( type, { key: key, title: title, url: hashURL } );
@@ -438,6 +435,16 @@
     */
     var view = {
 
+        init: function () {
+            $( '#header' ).hide();
+            $( '#message' ).hide();
+            $( '#menu' ).hide();
+            $( '#tophome' ).hide();
+            $( '#category' ).hide();
+            $( '#bord' ).hide();
+            $( '#thread' ).hide();
+        },
+
         loading: function ( flg ) {
             var loading = $( '#loading1' );
             if ( flg == null ) loading.show();
@@ -473,9 +480,9 @@
                     title: val.title,
                     url: apiModel.makeHash( val.url ),
                     all: val.all,
-                    createdAt: val.createdA
+                    createdAt: val.createdAt
                 });
-                $( '#threads' ).append( html );
+                $( '#bord' ).append( html );
                 if ( i >= limit ) return false;
             });
 
@@ -501,14 +508,12 @@
 
         cateHistory: function () {
 
-            var cateHis = historyModel.getData( 'cate' ),
+            var cateHis = historyModel.getData( 'bord' ),
             list = $( '<ul></ul>' );
-
             $.each( cateHis, function ( i, val ) {
                 var html = '<li><a href="' + val.url + '">' + val.title + '</a></li>'
                 list.prepend( html );
             });
-
             $( '#his-cate' ).html( list );
 
         },
@@ -517,12 +522,10 @@
 
             var thHis = historyModel.getData( 'thread' ),
             list = $( '<ul></ul>' );
-
             $.each( thHis, function ( i, val ) {
                 var html = '<li><a href="' + val.url + '">' + val.title + '</a></li>'
                 list.prepend( html );
             });
-
             $( '#his-thread' ).html( list );
 
         },
