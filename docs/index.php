@@ -29,8 +29,8 @@ require_once 'header.php';
 
 // Body
 if ($media == 'smart') {
-    require_once 'mobile/index.php';
+    require_once 'media/smart.php';
 } else {
-    require_once 'pc/index.php';
+    require_once 'media/pc.php';
 }
 
