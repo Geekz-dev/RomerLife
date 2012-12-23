@@ -9,10 +9,11 @@
 */
 (function () {
 
-    var ss = sessionStorage, ls = localStorage;
+    var w = window, d = document,
+    ss = sessionStorage, ls = localStorage;
 
     // API
-    var BORD_API ='/-/bord.php',
+    var BOARD_API ='/-/board.php',
     THREAD_API = '/-/thread.php',
     UPDATE_API ='/-/update.php';
 
@@ -26,7 +27,7 @@
     var mode = 0;
     if ( mode !== 0 ) {
         if ( mode != 2 ) {
-            BORD_API ='./debug/bord.json',
+            BOARD_API ='./debug/board.json',
             THREAD_API = './debug/thread.json',
             UPDATE_API ='./debug/update.json';
         }
@@ -51,7 +52,7 @@
 
         loadPage: function () {
 
-            $( window ).scrollTop( 0 );
+            $( w ).scrollTop( 0 );
             view.init();
             view.loading();
 
@@ -93,7 +94,7 @@
                     $( '#thread' ).show();
                     var temp = './template/smart/thread.tpl';
                     templateModel.loadTemplate( temp, 'res', function ( tpl ) {
-                        var param = { sd: hash[ 1 ], bord: hash[ 2 ], dat: hash[ 3 ] }
+                        var param = { sd: hash[ 1 ], board: hash[ 2 ], dat: hash[ 3 ] }
                         apiModel.loadJson( THREAD_API, param, function ( json ) {
 
                             if ( json.Status == 'ok' ) {
@@ -115,11 +116,11 @@
                 } else // スレッド一覧
                 if ( hash[ 2 ] != null ){
 
-                    $( '#bord' ).show();
-                    var temp = './template/smart/bord.tpl';
-                    templateModel.loadTemplate( temp, 'bord', function ( tpl ) {
-                        var param = { sd: hash[ 1 ], bord: hash[ 2 ] }
-                        apiModel.loadJson( BORD_API, param, function ( json ) {
+                    $( '#board' ).show();
+                    var temp = './template/smart/board.tpl';
+                    templateModel.loadTemplate( temp, 'board', function ( tpl ) {
+                        var param = { sd: hash[ 1 ], board: hash[ 2 ] }
+                        apiModel.loadJson( BOARD_API, param, function ( json ) {
 
                             if ( json.Status == 'ok' ) {
                                 view.thread( json, tpl, 20 );
@@ -155,7 +156,7 @@
                 temp = './template/smart/thread.tpl';
                 templateModel.loadTemplate( temp, 'thread', function ( tpl ) {
                     var lastId = parseInt( $( '.res-num:last' ).text() ),
-                    param = { sd: hash[ 1 ], bord: hash[ 2 ], dat: hash[ 3 ], maxId: lastId }
+                    param = { sd: hash[ 1 ], board: hash[ 2 ], dat: hash[ 3 ], maxId: lastId }
                     apiModel.loadJson( UPDATE_API, param, function ( json ) {
 
                         if ( json.Status == 'update ok' ) {
@@ -176,10 +177,10 @@
             if ( hash[ 2 ] != null ) {
 
                 view.loading();
-                temp = './template/smart/bord.tpl';
-                templateModel.loadTemplate( temp, 'bord', function ( tpl ) {
-                    var param = { sd: hash[ 1 ], bord: hash[ 2 ], dat: hash[ 3 ] }
-                    apiModel.loadJson( BORD_API, param, function ( json ) {
+                temp = './template/smart/board.tpl';
+                templateModel.loadTemplate( temp, 'board', function ( tpl ) {
+                    var param = { sd: hash[ 1 ], board: hash[ 2 ], dat: hash[ 3 ] }
+                    apiModel.loadJson( BOARD_API, param, function ( json ) {
 
                         if ( json.Status == 'ok' ) {
                             view.thread( json, tpl );
@@ -240,7 +241,7 @@
 
             if ( json.Status == 'ok' ) {
                 var hashURL = getHash(), key = storage.cacheKey(),
-                type = 'bord', title = json.bord;
+                type = 'board', title = json.board;
                 if ( json.contents ) type = 'thread', title = json.title;
                 apiModel.setData( json );
                 historyModel.setData( type, { key: key, title: title, url: hashURL } );
@@ -441,7 +442,7 @@
             $( '#menu' ).hide();
             $( '#tophome' ).hide();
             $( '#category' ).hide();
-            $( '#bord' ).hide();
+            $( '#board' ).hide();
             $( '#thread' ).hide();
         },
 
@@ -474,7 +475,7 @@
         thread: function ( json, tpl, limit ) {
 
             var compiled = _.template( tpl );
-            $( '#header' ).text( json.bord );
+            $( '#header' ).text( json.board );
             $.each( json.thread, function( i, val ) {
                 html = compiled({
                     title: val.title,
@@ -482,7 +483,7 @@
                     all: val.all,
                     createdAt: val.createdAt
                 });
-                $( '#bord' ).append( html );
+                $( '#board' ).append( html );
                 if ( i >= limit ) return false;
             });
 
@@ -508,7 +509,7 @@
 
         cateHistory: function () {
 
-            var cateHis = historyModel.getData( 'bord' ),
+            var cateHis = historyModel.getData( 'board' ),
             list = $( '<ul></ul>' );
             $.each( cateHis, function ( i, val ) {
                 var html = '<li><a href="' + val.url + '">' + val.title + '</a></li>'
@@ -587,17 +588,17 @@
 
     }
 
-    $(document).ready(function () {
+    $( d ).ready(function () {
 
         // init
         router.loadPage();
 
         // Bottom Event
-        $(window).bottom();
+        $( w ).bottom();
 
         // Hash Event
         tm.HashObserver.enable();
-        document.addEventListener( 'changehash', function ( e ) {
+        d.addEventListener( 'changehash', function ( e ) {
             router.loadPage( getHash( true ) );
         });
 
@@ -611,8 +612,6 @@
             router.deleteData( ss );
             router.deleteData( ls );
         });
-
-        // Load
 
     });
 

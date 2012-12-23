@@ -12,7 +12,7 @@ abstract class API {
 
     protected $domain;
     protected $sub_domain;
-    protected $bord;
+    protected $board;
     protected $dat;
 
     public function __construct () {
@@ -23,7 +23,7 @@ abstract class API {
             $this->domain = $parms['d'];
         }
         $this->sub_domain = $parms['sd'];
-        $this->bord = $parms['bord'];
+        $this->board = $parms['board'];
         $this->dat = $parms['dat'];
 
     }
@@ -83,7 +83,7 @@ abstract class API {
 
     protected function CheckParm () {
 
-        if (empty($this->sub_domain) || empty($this->bord)) {
+        if (empty($this->sub_domain) || empty($this->board)) {
             $this->ErrorMessage('{"Error":"Parmerter is not set"}');
         } else
         if (!preg_match('/(2ch.net|pinkbbs.com)/', $this->domain)) {

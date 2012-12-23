@@ -77,7 +77,7 @@ class Thread extends API {
     }
 
     public function getURL () {
-        $url = 'http://'.$this->sub_domain.'.'.$this->domain.'/'.$this->bord.'/dat/'.$this->dat.'.dat';
+        $url = 'http://'.$this->sub_domain.'.'.$this->domain.'/'.$this->board.'/dat/'.$this->dat.'.dat';
         return $url;
     }
 
