@@ -91,6 +91,7 @@
                 // スレッド詳細
                 if ( hash[ 3 ] != null ) {
 
+                    $( '#thread' ).html( '' );
                     $( '#thread' ).show();
                     var temp = './template/smart/thread.tpl';
                     templateModel.loadTemplate( temp, 'res', function ( tpl ) {
@@ -116,6 +117,7 @@
                 } else // スレッド一覧
                 if ( hash[ 2 ] != null ){
 
+                    $( '#board' ).html( '' );
                     $( '#board' ).show();
                     var temp = './template/smart/board.tpl';
                     templateModel.loadTemplate( temp, 'board', function ( tpl ) {
@@ -484,7 +486,6 @@
                     createdAt: val.createdAt
                 });
                 $( '#board' ).append( html );
-                if ( i >= limit ) return false;
             });
 
         },
@@ -497,7 +498,7 @@
                 html = compiled({
                     resNum: val.resid,
                     userName: val.name,
-                    resText: val.res,
+                    resText: view.toImage(val.res),
                     createdAt: val.createdAt,
                     userId: val.id
                 });
@@ -530,6 +531,12 @@
             $( '#his-thread' ).html( list );
 
         },
+
+        toImage: function ( data ) {
+            var ptn = /(http:\/\/([\w\.\/]+)\.(jpg|png|gif))/gi,
+            re = '<div class="dummy" data-image="$1">画像</div>';
+            return data.replace( ptn, re );
+        }
 
     }
 
@@ -611,6 +618,18 @@
         $( '.delete' ).click(function () {
             router.deleteData( ss );
             router.deleteData( ls );
+        });
+
+        // Image
+        $( '.dummy' ).live('click', function () {
+            var $this = $( this ),
+            url = $this.data( 'image' );
+            $this.removeClass( 'dummy' );
+            $this.click(function () {
+                $this.html( '画像' );
+                $this.addClass( 'dummy' );
+            });
+            $this.html( '<img src="' + url + '">' );
         });
 
     });

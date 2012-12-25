@@ -299,6 +299,19 @@ h3 {
     font-size: 12px;
 }
 
+.res-text img {
+    max-width: 300px;
+}
+
+.dummy {
+    background: #DA5;
+    border: 1px solid #555;
+    text-align: center;
+    width: 30px;
+    padding: 20px;
+    margin: 5px;
+}
+
 /**
  *  Message
 */

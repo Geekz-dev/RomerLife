@@ -1,3 +1,12 @@
+<script>
+$(function () {
+    // Category
+    $( '#category > ul' ).hide();
+    $( '#category > h3' ).click(function () {
+        $( this ).next().slideToggle();
+    });
+});
+</script>
 <!--[ History ]-->
 <h2>最近の履歴</h2>
 <div id="history">
