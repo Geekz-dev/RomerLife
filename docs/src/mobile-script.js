@@ -52,7 +52,7 @@
 
         loadPage: function () {
 
-            $( w ).scrollTop( 0 );
+            $( 'html, body' ).animate( { scrollTop: 1 }, 'fast' );
             view.init();
             view.loading();
 
@@ -64,24 +64,13 @@
             }
 
             // TOP
-            if ( hash[ 0 ] == '' ) {
+            if ( hash[ 0 ] == '' )  {
 
-                $( '#tophome' ).show();
-                var temp = './template/smart/topHome.tpl';
-                templateModel.loadTemplate( temp, 'topHome', function ( tpl ) {
-                    json = null;
-                    view.topHome( json, tpl );
-                    view.loading( false );
-                });
-
-            } else // Category
-            if ( hash[ 0 ] == 'cate' )  {
-
-                $( '#category' ).show();
+                $( '#top' ).show();
                 var temp = './template/smart/category.tpl';
                 templateModel.loadTemplate( temp, 'category', function ( tpl ) {
                     json = null;
-                    view.category( json, tpl );
+                    view.top( json, tpl );
                     view.loading( false );
                 });
 
@@ -439,17 +428,14 @@
     var view = {
 
         init: function () {
-            $( '#header' ).hide();
             $( '#message' ).hide();
-            $( '#menu' ).hide();
-            $( '#tophome' ).hide();
-            $( '#category' ).hide();
+            $( '#top' ).hide();
             $( '#board' ).hide();
             $( '#thread' ).hide();
         },
 
         loading: function ( flg ) {
-            var loading = $( '#loading1' );
+            var loading = $( '#loading' );
             if ( flg == null ) loading.show();
             if ( flg == false ) loading.hide();
         },
@@ -463,12 +449,8 @@
             }
         },
 
-        topHome: function ( json, tpl ) {
-            $( '#tophome' ).html( tpl );
-        },
-
-        category: function ( json, tpl ) {
-            $( '#category' ).html( tpl );
+        top: function ( json, tpl ) {
+            $( '#top' ).html( tpl );
             $( '#header' ).html( 'RomerLife' );
             view.cateHistory();
             view.thHistory();
@@ -486,6 +468,7 @@
                     createdAt: val.createdAt
                 });
                 $( '#board' ).append( html );
+                if ( i == 20 ) return false;
             });
 
         },
@@ -516,7 +499,7 @@
                 var html = '<li><a href="' + val.url + '">' + val.title + '</a></li>'
                 list.prepend( html );
             });
-            $( '#his-cate' ).html( list );
+            $( '#his-board' ).html( list );
 
         },
 
@@ -533,7 +516,7 @@
         },
 
         toImage: function ( data ) {
-            var ptn = /(http:\/\/([\w\.\/]+)\.(jpg|png|gif))/gi,
+            var ptn = /(http:\/\/([\w\.\/\-_]+)\.(jpg|png|gif))/gi,
             re = '<div class="dummy" data-image="$1">画像</div>';
             return data.replace( ptn, re );
         }
@@ -602,6 +585,8 @@
 
         // Bottom Event
         $( w ).bottom();
+        $( w ).bind('bottom', function () {
+        });
 
         // Hash Event
         tm.HashObserver.enable();
@@ -621,7 +606,7 @@
         });
 
         // Image
-        $( '.dummy' ).live('click', function () {
+        $( '.dummy' ).live('touchstart', function () {
             var $this = $( this ),
             url = $this.data( 'image' );
             $this.removeClass( 'dummy' );

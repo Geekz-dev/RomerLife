@@ -13,18 +13,14 @@
     <!--[ Main ]-->
     <div id="main">
 
-        <div id="loading1"><img src="../images/loading_1.gif" alt="loading..."></div>
+        <div id="loading"><img src="../images/loading.gif" alt="loading..."></div>
 
         <!--[ Main ]-->
         <div id="contents">
 
-            <!--[ TopHome ]-->
-            <div id="tophome"></div>
-            <!--[ End TopHome ]-->
-
-            <!--[ Category ]-->
-            <div id="category"></div>
-            <!--[ End Category ]-->
+            <!--[ Top ]-->
+            <div id="top"></div>
+            <!--[ End Top ]-->
 
             <!--[ Board ]-->
             <div id="board"></div>
@@ -45,7 +41,7 @@
     <div id="menu">
         <nav>
             <ul>
-                <li><a href="#cate" class="menu"></a></li>
+                <li><a href="#" class="menu"></a></li>
                 <li><a href="javascript:void(0)" class="controller"></a></li>
                 <li><a href="javascript:void(0)" class="delete"></a></li>
                 <li><a href="javascript:void(0)" class="update"></a></li>

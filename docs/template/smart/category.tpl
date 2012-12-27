@@ -1,16 +1,8 @@
-<script>
-$(function () {
-    // Category
-    $( '#category > ul' ).hide();
-    $( '#category > h3' ).click(function () {
-        $( this ).next().slideToggle();
-    });
-});
-</script>
+<script src="src/category.js"></script>
 <!--[ History ]-->
 <h2>最近の履歴</h2>
 <div id="history">
-    <div id="his-cate"></div>
+    <div id="his-board"></div>
     <div id="his-thread"></div>
 </div>
 <!--[ End History ]-->
