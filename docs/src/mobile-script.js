@@ -2,8 +2,8 @@
  *  RomerLife
  *  Mobile Script
  *
- *  @version 1.0
  *  @author R.SkuLL
+ *  @version 1.0
  *
  *  Copyright (c) 2013 Geekz Web Development
 */
