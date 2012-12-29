@@ -12,8 +12,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="css/reset.css" type="text/css">
     <link rel="apple-touch-icon-precomposed" href="images/apple-icon.png">
+    <link rel="stylesheet" href="css/reset.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/mobile-style.css">
     <?php } ?>
 
