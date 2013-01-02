@@ -72,6 +72,42 @@
                     json = null;
                     view.top( json, tpl );
                     view.loading( false );
+
+                    // Favorite and History Delete Event
+                    $$( '.boardFavo' ).doubleTap(function () {
+                        if (confirm( '削除しますか？' )) {
+                            var key = $$( this ).data( 'key' );
+                            $$( this ).remove();
+                            favoriteModel.deleteData( 'board', key );
+                            view.message( 'お気に入りから削除しました。', true );
+                        }
+                    });
+                    $$( '.thFavo' ).doubleTap(function () {
+                        if (confirm( '削除しますか？' )) {
+                            var key = $$( this ).data( 'key' );
+                            $$( this ).remove();
+                            favoriteModel.deleteData( 'thread', key );
+                            view.message( 'お気に入りから削除しました。', true );
+                        }
+                    });
+                    $$( '.boardHis' ).doubleTap(function () {
+                        if (confirm( '削除しますか？' )) {
+                            var key = $$( this ).data( 'key' );
+                            $$( this ).remove();
+                            historyModel.deleteData( 'board', key );
+                            view.message( '履歴から削除しました。', true );
+                        }
+                    });
+                    $$( '.thHis' ).doubleTap(function () {
+                        if (confirm( '削除しますか？' )) {
+                            var key = $$( this ).data( 'key' );
+                            $$( this ).remove();
+                            historyModel.deleteData( 'thread', key );
+                            view.message( '履歴から削除しました。', true );
+                        }
+                    });
+
+
                 });
 
             } else
@@ -192,6 +228,19 @@
         deleteData: function ( st, key ) {
             storage.deleteData( st, key );
             view.message( 'ストレージからデータを削除しました。', true );
+        },
+
+        favorite: function ( type ) {
+            var key = type  + '-history',
+            cachekey = storage.cacheKey(),
+            his = storage.getData( ls, 'json', key ),
+            data = his[ cachekey ];
+            if ( data ) {
+                favoriteModel.setData( type, { key: cachekey, title: data.title, url: data.url } );
+                view.message( 'お気に入りに登録しました！', true );
+            } else {
+                view.message( '登録できませんでした！', true );
+            }
         }
 
     }
@@ -398,18 +447,9 @@
             return this.history[ key ] || false;
         },
 
-        deleteData: function ( type, eq ) {
+        deleteData: function ( type, delkey ) {
             var key = type + '-' + 'history';
-            // 番号がなければすべて削除
-            if ( eq == '' ) {
-                if ( ls ) {
-                    storage.delete( ls, key );
-                } else {
-                    delete this.history[ key ];
-                }
-            } else {
-                var his = this.getData( key );
-            }
+            storage.deleteProp( ls, key, delkey );
         },
 
         length: function ( obj ) {
@@ -422,6 +462,49 @@
 
     }
 
+
+    /**
+     *  Favorite Model
+    */
+    var favoriteModel = {
+
+        setData: function ( type, data ) {
+            var key = type + '-' + 'favorite',
+            favo = this.createJson( type, data );
+            if( ls ) {
+                storage.setData( ls, 'json', favo, key );
+                console.log( 'ストレージに履歴を保存' );
+            } else {
+                return false;
+            }
+        },
+
+        getData: function ( type ) {
+            var key = type + '-' + 'favorite';
+            if ( ls ) return storage.getData( ls, 'json', key );
+        },
+
+        createJson: function ( type, data ) {
+            var favo = this.getData( type );
+            if ( !favo ) {
+                var newFavo = {}
+                newFavo[data.key] = { title: data.title, url: data.url }
+                return newFavo;
+            }
+            if ( !favo[ data.key ] ) {
+                favo[ data.key ] = { title: data.title, url: data.url };
+            }
+            return favo;
+        },
+
+        deleteData: function ( type, delkey ) {
+            var key = type + '-' + 'favorite';
+            storage.deleteProp( ls, key, delkey );
+        }
+
+    }
+
+
     /**
      *  View
     */
@@ -429,6 +512,7 @@
 
         init: function () {
             $( '#message' ).hide();
+            $( '#direct' ).hide();
             $( '#top' ).hide();
             $( '#board' ).hide();
             $( '#thread' ).hide();
@@ -450,10 +534,12 @@
         },
 
         top: function ( json, tpl ) {
-            $( '#top' ).html( tpl );
-            $( '#header' ).html( 'RomerLife' );
-            view.cateHistory();
+            $( '#category' ).html( tpl );
+            //$( '#header' ).html( 'RomerLife' );
+            view.boardHistory();
             view.thHistory();
+            view.boardFavorite();
+            view.thFavorite();
         },
 
         thread: function ( json, tpl, limit ) {
@@ -468,7 +554,7 @@
                     createdAt: val.createdAt
                 });
                 $( '#board' ).append( html );
-                if ( i == 20 ) return false;
+                //if ( i == 20 ) return false;
             });
 
         },
@@ -491,15 +577,26 @@
 
         },
 
-        cateHistory: function () {
+        boardHistory: function () {
 
-            var cateHis = historyModel.getData( 'board' ),
+            var boardHis = historyModel.getData( 'board' ),
             list = $( '<ul></ul>' );
-            $.each( cateHis, function ( i, val ) {
-                var html = '<li><a href="' + val.url + '">' + val.title + '</a></li>'
+            $.each( boardHis, function ( i, val ) {
+                var html = '<li><a href="' + val.url + '" class="boardHis" data-key="' + i + '">' + val.title + '</a></li>'
                 list.prepend( html );
             });
             $( '#his-board' ).html( list );
+            if ( $( '#his-board li' ).size() > 2 ) {
+                $( '#his-board li:gt(1)' ).hide();
+                $( '#his-board' ).append( '<a href="#" id="board-all">すべて表示</a>' );
+                $( '#board-all' ).toggle(function () {
+                    $( '#his-board li' ).fadeIn();
+                    $( this ).html( '閉じる' );
+                }, function () {
+                    $( '#his-board li:gt(1)' ).fadeOut();
+                    $( this ).html( 'すべて表示' );
+                });
+            }
 
         },
 
@@ -508,11 +605,72 @@
             var thHis = historyModel.getData( 'thread' ),
             list = $( '<ul></ul>' );
             $.each( thHis, function ( i, val ) {
-                var html = '<li><a href="' + val.url + '">' + val.title + '</a></li>'
+                var html = '<li><a href="' + val.url + '" class="thHis" data-key="' + i + '">' + val.title + '</a></li>'
                 list.prepend( html );
             });
             $( '#his-thread' ).html( list );
 
+            if ( $( '#his-thread li' ).size() > 2 ) {
+                $( '#his-thread li:gt(1)' ).hide();
+                $( '#his-thread' ).append( '<a href="#" id="th-all">すべて表示</a>' );
+                $( '#th-all' ).toggle(function () {
+                    $( '#his-thread li' ).fadeIn();
+                    $( this ).html( '閉じる' );
+                }, function () {
+                    $( '#his-thread li:gt(1)' ).fadeOut();
+                    $( this ).html( 'すべて表示' );
+                });
+            }
+
+        },
+
+        boardFavorite: function () {
+
+            var boardFavo = favoriteModel.getData( 'board' ),
+            list = $( '<ul></ul>' );
+            $.each( boardFavo, function ( i, val ) {
+                var html = '<li><a href="' + val.url + '" class="boardFavo" data-key="' + i + '">' + val.title + '</a></li>'
+                list.prepend( html );
+            });
+            $( '#favo-board' ).html( list );
+            /*
+            if ( $( '#his-board li' ).size() > 2 ) {
+                $( '#his-board li:gt(1)' ).hide();
+                $( '#his-board' ).append( '<a href="#" id="board-all">すべて表示</a>' );
+                $( '#board-all' ).toggle(function () {
+                    $( '#his-board li' ).fadeIn();
+                    $( this ).html( '閉じる' );
+                }, function () {
+                    $( '#his-board li:gt(1)' ).fadeOut();
+                    $( this ).html( 'すべて表示' );
+                });
+            }
+            */
+
+        },
+
+        thFavorite: function () {
+
+            var thFavo = favoriteModel.getData( 'thread' ),
+            list = $( '<ul></ul>' );
+            $.each( thFavo, function ( i, val ) {
+                var html = '<li><a href="' + val.url + '" class="thFavo" data-key="' + i + '">' + val.title + '</a></li>'
+                list.prepend( html );
+            });
+            $( '#favo-thread' ).html( list );
+            /*
+            if ( $( '#his-thread li' ).size() > 2 ) {
+                $( '#his-thread li:gt(1)' ).hide();
+                $( '#his-thread' ).append( '<a href="#" id="th-all">すべて表示</a>' );
+                $( '#th-all' ).toggle(function () {
+                    $( '#his-thread li' ).fadeIn();
+                    $( this ).html( '閉じる' );
+                }, function () {
+                    $( '#his-thread li:gt(1)' ).fadeOut();
+                    $( this ).html( 'すべて表示' );
+                });
+            }
+            */
         },
 
         toImage: function ( data ) {
@@ -551,6 +709,12 @@
                 data = JSON.parse( data );
             }
             return data || false;
+        },
+
+        deleteProp: function ( st, key, delkey ) {
+            var data = this.getData( st, 'json', key );
+            delete data[ delkey ];
+            this.setData( st, 'json', data, key );
         },
 
         deleteData: function ( st, key ) {
@@ -601,8 +765,17 @@
 
         // Delete Event
         $( '.delete' ).click(function () {
-            router.deleteData( ss );
-            router.deleteData( ls );
+            var st = $( this ).data( 'storage' ),
+            key = $( this ).data( 'key' ) || null;
+            router.deleteData( st, key );
+        });
+
+        // Favorite Event
+        $( '.favo-board' ).click(function () {
+            router.favorite( 'board' );
+        });
+        $( '.favo-thread' ).click(function () {
+            router.favorite( 'thread' );
         });
 
         // Image

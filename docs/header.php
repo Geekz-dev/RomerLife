@@ -28,6 +28,7 @@
     <!--<link rel="shortcut icon" href="../images/favicon.ico">-->
     <script src="src/library/jquery-1.8.2.min.js"></script>
     <script src="src/library/jquery.bottom-1.0.js"></script>
+    <script src="src/library/quo.js"></script>
     <script src="src/library/underscore.js"></script>
     <script src="src/library/tm.hash-observer.js"></script>
 

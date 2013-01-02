@@ -6,7 +6,13 @@
 
     <!--[ Header ]-->
     <header>
-        <div id="header">RomerLife</div>
+        <h1><img src="images/title.png" alt="RomerLife"></h1>
+        <div>
+            <ul>
+                <li class="menu"><a href="#"></a></li>
+                <li class="menu"></li>
+            </ul>
+        </div>
     </header>
     <!--[ End Header ]-->
 
@@ -19,7 +25,37 @@
         <div id="contents">
 
             <!--[ Top ]-->
-            <div id="top"></div>
+            <div id="top">
+
+                <!--[ Direct ]-->
+                <div id="direct">
+                    <a href="#">直近の閲覧スレ</a>
+                </div>
+                <!--[ End Direct ]-->
+
+                <!--[ Favorites ]-->
+                <h2>お気に入り</h2>
+                <div id="favo-board"></div>
+                <!--[ End Favorites ]-->
+
+                <!--[ CheckThread ]-->
+                    <h2>チェックスレッド</h2>
+                    <div id="favo-thread"></div>
+                <!--[ End CheckThrad ]-->
+
+                <!--[ History ]-->
+                <h2>最近の履歴</h2>
+                <div id="history">
+                    <div id="his-board"></div>
+                    <div id="his-thread"></div>
+                </div>
+                <!--[ End History ]-->
+
+                <!--[ Category ]-->
+                <div id="category"></div>
+                <!--[ End Category ]-->
+
+            </div>
             <!--[ End Top ]-->
 
             <!--[ Board ]-->
