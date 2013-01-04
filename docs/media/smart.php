@@ -19,7 +19,8 @@
     <!--[ Main ]-->
     <div id="main">
 
-        <div id="loading"><img src="../images/loading.gif" alt="loading..."></div>
+        <div id="loading"><img src="./images/loading.gif" alt="loading..."></div>
+        <div id="offline">現在オフラインモードです。</div>
 
         <!--[ Main ]-->
         <div id="contents">

@@ -8,7 +8,7 @@
  *  Copyright (c) 2013 Geekz Web Development
 */
 
-class Board extends API {
+final class Board extends API {
 
     public function CreateArray ($conte) {
 

@@ -8,7 +8,7 @@
  *  Copyright (c) 2013 Geekz Web Development
 */
 
-class Update extends Thread {
+final class Update extends Thread {
 
     private $maxId;
 

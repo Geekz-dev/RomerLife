@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" manifest="romerlife.appcache">
 <head>
 
     <title>RomerLife</title>

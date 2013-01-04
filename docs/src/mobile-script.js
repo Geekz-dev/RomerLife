@@ -10,7 +10,8 @@
 (function () {
 
     var w = window, d = document,
-    ss = sessionStorage, ls = localStorage;
+    ss = sessionStorage, ls = localStorage,
+    nw = navigator.onLine;
 
     // API
     var BOARD_API ='/-/board.php',
@@ -52,6 +53,8 @@
 
         loadPage: function () {
 
+            if ( !nw ) $( '#offline' ).show();
+
             $( 'html, body' ).animate( { scrollTop: 1 }, 'fast' );
             view.init();
             view.loading();
@@ -81,6 +84,7 @@
                             favoriteModel.deleteData( 'board', key );
                             view.message( 'お気に入りから削除しました。', true );
                         }
+                        return;
                     });
                     $$( '.thFavo' ).doubleTap(function () {
                         if (confirm( '削除しますか？' )) {
@@ -89,6 +93,7 @@
                             favoriteModel.deleteData( 'thread', key );
                             view.message( 'お気に入りから削除しました。', true );
                         }
+                        return;
                     });
                     $$( '.boardHis' ).doubleTap(function () {
                         if (confirm( '削除しますか？' )) {
@@ -97,6 +102,7 @@
                             historyModel.deleteData( 'board', key );
                             view.message( '履歴から削除しました。', true );
                         }
+                        return;
                     });
                     $$( '.thHis' ).doubleTap(function () {
                         if (confirm( '削除しますか？' )) {
@@ -105,8 +111,8 @@
                             historyModel.deleteData( 'thread', key );
                             view.message( '履歴から削除しました。', true );
                         }
+                        return;
                     });
-
 
                 });
 

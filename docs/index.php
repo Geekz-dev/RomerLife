@@ -16,7 +16,7 @@ $os_mobile_list = array(
     '/BlackBerry/'
 );
 
-$media = 'pc';
+$media = 'smart';
 foreach ($os_mobile_list as $val) {
     if (preg_match($val, $ua)) {
        $media = 'smart';

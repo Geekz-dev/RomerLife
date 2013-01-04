@@ -1,4 +1,3 @@
-<script src="src/category.js"></script>
 <h2>カテゴリ</h2>
 <!--[ 地震 ]-->
 <h3>地震</h3>
@@ -998,3 +997,19 @@
     <li><a href="#view/anago/neet4vip">ニー速</a></li>
     <li><a href="#view/engawa/aniki">ガチホモ</a></li>
 </ul>
+<script>
+$( '#category ul' ).hide();
+$( '#category h3' ).click(function () {
+
+    if ( !$( this ).is( '.h3_on' ) ) {
+        var pos = $( this ).offset().top;
+        $( 'html, body' ).animate( { scrollTop: pos }, 'fast' );
+    }
+
+    $( this ).toggleClass( 'h3_on' );
+    $( this ).next().animate({
+        height: 'toggle'
+    }, 'fast');
+
+});
+</script>

@@ -34,6 +34,17 @@ a {
     padding: 5px;
 }
 
+#offline {
+    display: none;
+    background: #222;
+    border: 1px solid #555;
+    border-width: 1px 0px;
+    margin: 5px 0px;
+    padding: 5px;
+    color: #D05;
+    text-align: center;
+}
+
 /* Icon */
 .home, .cate, .update, .menu,
 .delete, .error, .controller {
@@ -126,6 +137,7 @@ header li {
 }
 
 h2 {
+    background: #F5F5F5;
     border: solid #555;
     border-width: 1px 0px;
     padding: 3px;
@@ -172,4 +184,25 @@ h2 {
     text-align: right;
     margin-bottom: 5px;
     clear: both;
+}
+
+/* Category */
+h3 {
+    background: #EEE;
+    border: 1px solid #555;
+    margin: 5px auto;
+    padding: 5px;
+    width: 95%;
+    clear: both;
+}
+
+#category li a {
+    width: 46%;
+    min-height: 33px;
+    border: 1px solid #555;
+    margin: 5px;
+    padding-top: 10px;
+    font-size: 14px;
+    text-align: center;
+    float: left;
 }
