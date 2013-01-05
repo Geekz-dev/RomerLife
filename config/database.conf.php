@@ -14,11 +14,11 @@ function isError ($error) {
 
 //データベースに接続設定
 $dsn = array(
-    'phptype'  => '',
-    'username' => '',
-    'password' => '',
-    'hostname' => '',
-    'database' => '',
-    'charset'  => ''
+    'phptype'  => 'mysql',
+    'username' => 'root',
+    'password' => '12345',
+    'hostname' => 'localhost',
+    'database' => 'romerlife',
+    'charset'  => 'utf8'
 );
 

@@ -1,7 +1,7 @@
 <?php
 /**
- *
- *
+ *  Regist Class
+ *  @author R.SkuLL
 */
 final class Regist {
 
@@ -22,7 +22,7 @@ final class Regist {
         if (!$this->check($twid)) return;
         $sql = "DELETE FROM user WHERE id = ?";
         $req = $this->Db->prepare($sql);
-        $req->execute(array($id);
+        $req->execute(array($id));
     }
 
     private function check ($twid) {
