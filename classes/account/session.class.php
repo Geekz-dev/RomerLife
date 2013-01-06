@@ -1,7 +1,9 @@
 <?php
 /**
  *  Session Class
+ *
  *  @author R.SkuLL
+ *  Copyright (c) 2013 RomerLife Geekz Web Development
 */
 final class Session {
 
@@ -27,12 +29,12 @@ final class Session {
         $req = $this->Db->prepare($sql);
         $result = $req->execute(array($sess))->fetchCol();
         if (!empty($result[0])) {
-            return $result[0];
+            return true;
         }
         return false;
     }
 
-    public function getSession ($id) {
+    private function getSession ($id) {
         $sql = "SELECT session FROM session WHERE uid = ?";
         $req = $this->Db->prepare($sql);
         $result = $req->execute(array($id))->fetchCol();
@@ -45,12 +47,14 @@ final class Session {
     public function deleteSession ($id) {
         $sql = "DELETE FROM session WHERE uid = $id";
         $this->Db->query($sql);
+        setCookie('RLSESSID', '', time() - 9999999);
     }
 
     private function makeSession ($id) {
         $session = md5(uniqid(mt_rand(), true));
         $sql = "INSERT INTO session (uid, session) VALUES ($id, '$session')";
         $this->Db->query($sql);
+        setCookie('RLSESSID', $session, time() + 60 * 60 * 24 * 30 * 3);
         return $session;
     }
 

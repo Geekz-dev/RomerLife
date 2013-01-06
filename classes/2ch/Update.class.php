@@ -2,12 +2,9 @@
 /**
  *  Update API Class
  *
- *  @version 1.0
  *  @author R.SkuLL
- *
- *  Copyright (c) 2013 Geekz Web Development
+ *  Copyright (c) 2013 RomerLife Geekz Web Development
 */
-
 final class Update extends Thread {
 
     private $maxId;

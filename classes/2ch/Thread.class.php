@@ -2,13 +2,10 @@
 /**
  *  Thread API Class
  *
- *  @version 1.0
  *  @author R.SkuLL
- *
- *  Copyright (c) 2013 Geekz Web Development
+ *  Copyright (c) 2013 RomerLife Geekz Web Development
 */
-
-class Thread extends API {
+class Thread extends Api2ch {
 
     public function CreateArray ($conte) {
 

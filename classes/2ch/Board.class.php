@@ -2,13 +2,10 @@
 /**
  *  Board API Class
  *
- *  @version 1.0
  *  @author R.SkuLL
- *
- *  Copyright (c) 2013 Geekz Web Development
+ *  Copyright (c) 2013 RomerLife Geekz Web Development
 */
-
-final class Board extends API {
+final class Board extends Api2ch {
 
     public function CreateArray ($conte) {
 
@@ -69,4 +66,3 @@ final class Board extends API {
     }
 
 }
-
