@@ -2,6 +2,10 @@
 /**
  *  アカウント作成
  *
+ *  @author Goma.Manoha
+ *  @version 1.0
+ *
+ * Copyright (c) 2013 RomerLife Geekz Web Development
 */
 session_start();
 
@@ -17,6 +21,7 @@ if (empty($passwd) || !preg_match('/[\w]{4,16}/', $passwd)) {
     header('Location: ./index.php');
 }
 
+//Twitter認証
 $access_token = $_SESSION['access_token'];
 $oauth_key = $access_token['oauth_token'];
 $oauth_secret = $access_token['oauth_token_secret'];
