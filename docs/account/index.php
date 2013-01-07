@@ -19,9 +19,23 @@ $oauth_secret = $access_token['oauth_token_secret'];
 if (empty($oauth_key) || empty($oauth_secret)) {
     header('Location: ./logout.php');
 }
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>RomerLife</title>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
 
-$connect = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $oauth_key, $oauth_secret);
-$content = $connect->get('account/verify_credentials');
+    <form action="./regist.php" method="post">
+        <p>Password<input type="text" name="passwd" value=""></p>
+        <p>確認<input type="text" value=""></p>
+        <input type="submit">
+    </form>
 
-$id = $content->id_str;
-$screen_name = $content->screen_name;
+</body>
+</html>
