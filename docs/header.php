@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja" manifest="romerlife.appcache">
+<!--<html lang="ja" manifest="romerlife.appcache">-->
+<html lang="ja">
 <head>
 
     <title>RomerLife</title>
@@ -45,7 +46,7 @@
         @version 1.0
         @mail info@geekz-dev.net
 
-        Copyright (c) 2013 Geekz Web Development
+        Copyright 2013 RomerLife Geekz Web Development
     -->
 
 </head>

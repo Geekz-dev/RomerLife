@@ -5,7 +5,7 @@
  *  @version 1.0
  *  @author R.SkuLL
  *
- *  Copyright (c) 2013 RomerLife Geekz Web Development
+ *  Copyright 2013 RomerLife Geekz Web Development
 */
 require_once '../../classes/account/session.class.php';
 require_once '../../config/database.conf.php';
@@ -14,8 +14,10 @@ require_once '../../config/database.conf.php';
 MDB2::connect($dsn);
 
 $sessid = $_COOKIE['RLSESSID'];
-$uname = $_PSOT['uname'];
-$passwd = $_PSOT['passwd'];
+//$uname = $_PSOT['uname'];
+//$passwd = $_PSOT['passwd'];
+$uname = $_GET['uname'];
+$passwd = $_GET['passwd'];
 
 $Session = new Session();
 

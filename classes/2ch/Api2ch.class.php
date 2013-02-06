@@ -33,11 +33,6 @@ abstract class Api2ch extends API {
         $this->dat = $parms['dat'];
     }
 
-    protected function getGetParm ($key = null) {
-        if (!isset($key)) return $_GET;
-        return $_GET[$key];
-    }
-
     private function getFile () {
         $file = @mb_convert_encoding(file_get_contents($this->getURL()), 'UTF-8', 'SJIS');
         if (!$file) {

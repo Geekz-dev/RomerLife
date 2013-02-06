@@ -9,7 +9,7 @@
         <h1><img src="images/title.png" alt="RomerLife"></h1>
         <div>
             <ul>
-                <li class="menu"><a href="#"></a></li>
+                <li class="update"><a href="#"></a></li>
                 <li class="menu"></li>
             </ul>
         </div>

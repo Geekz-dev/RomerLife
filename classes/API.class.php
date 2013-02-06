@@ -7,6 +7,16 @@
 */
 class API {
 
+    protected function getGetParm ($key = null) {
+        if (!isset($key)) return $_GET;
+        return $_GET[$key];
+    }
+
+    protected function getPostParm ($key = null) {
+        if (!isset($key)) return $_GET;
+        return $_POST[$key];
+    }
+
     protected function JsonHeader () {
         header('Content-Type: text/javascript; charset=utf-8');
     }
