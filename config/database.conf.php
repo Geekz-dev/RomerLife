@@ -15,10 +15,10 @@ function isError ($error) {
 //データベースに接続設定
 $dsn = array(
     'phptype'  => 'mysql',
-    'username' => 'root',
-    'password' => 'hadour1221',
-    'hostname' => 'localhost',
-    'database' => 'romerlife',
+    'username' => '',
+    'password' => '',
+    'hostname' => '',
+    'database' => '',
     'charset'  => 'utf8'
 );
 
