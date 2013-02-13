@@ -27,24 +27,19 @@
     <?php } ?>
 
     <!--<link rel="shortcut icon" href="../images/favicon.ico">-->
-    <script src="src/library/jquery-1.8.2.min.js"></script>
-    <script src="src/library/jquery.bottom-1.0.js"></script>
-    <script src="src/library/quo.js"></script>
-    <script src="src/library/underscore.js"></script>
-    <script src="src/library/tm.hash-observer.js"></script>
+    <script src="src/library/librarys.js"></script>
 
     <?php if ($media == 'smart') { ?>
-    <script src="src/mobile-script.js"></script>
+    <script src="src/mobile-script2.js"></script>
     <?php } elseif ($media == 'pc') { ?>
-    <script src="src/view.js"></script>
     <script src=src/script.js""></script>
     <?php } ?>
 
     <!--
-        RomerLife
+        RomerLife Mobile
 
         @version 1.0
-        @mail info@geekz-dev.net
+        @mail <info@geekz-dev.net>
 
         Copyright 2013 RomerLife Geekz Web Development
     -->

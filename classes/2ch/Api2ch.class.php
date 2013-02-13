@@ -1,9 +1,9 @@
 <?php
 /**
- *  Api2ch Abstract Class
+ *  2ch API Abstract Class
  *
  *  @author R.SkuLL
- *  Copyright (c) 2013 RomerLife Geekz Web Development
+ *  Copyright 2013 RomerLife Geekz Web Development
 */
 abstract class Api2ch extends API {
 

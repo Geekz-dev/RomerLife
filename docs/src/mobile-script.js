@@ -25,7 +25,7 @@
      *  2: storage is not used
      *  3: 1 and 2
     */
-    var mode = 0;
+    var mode = 1;
     if ( mode !== 0 ) {
         if ( mode != 2 ) {
             BOARD_API ='./debug/board.json',
@@ -39,11 +39,9 @@
 
     // Get Hash
     var getHash = function ( split ) {
-
         var url = location.hash;
         if ( split ) url = url.substr( 1 ).split( '/' );
         return url;
-
     }
 
     /**
@@ -467,7 +465,6 @@
         history: {}
 
     }
-
 
     /**
      *  Favorite Model

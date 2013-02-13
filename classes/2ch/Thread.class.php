@@ -3,7 +3,7 @@
  *  Thread API Class
  *
  *  @author R.SkuLL
- *  Copyright (c) 2013 RomerLife Geekz Web Development
+ *  Copyright 2013 RomerLife Geekz Web Development
 */
 class Thread extends Api2ch {
 
@@ -39,6 +39,9 @@ class Thread extends Api2ch {
         foreach ($dat as $key=>$val) {
 
             list($name, $dummy, $dateId, $conte) = explode('<>', $val);
+
+            // 無駄なタグがはいいてる場合削除
+            $name = preg_replace('/\s?<\/?b>/', '', $name);
 
             // 日時・ID分割して代入
             list($ymd, $date, $id) = explode(' ', $dateId);
@@ -79,4 +82,3 @@ class Thread extends Api2ch {
     }
 
 }
-

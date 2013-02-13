@@ -3,7 +3,7 @@
  *  API Class
  *
  *  @author R.SkuLL
- *  Copyright (c) 2013 RomerLife Geekz Web Development
+ *  Copyright 2013 RomerLife Geekz Web Development
 */
 class API {
 

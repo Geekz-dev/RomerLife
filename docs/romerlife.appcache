@@ -29,3 +29,6 @@ NETWORK:
 ./-/board.php
 ./-/thread.php
 ./-/update.php
+./-/list.php
+./-/session.php
+./-/regist.php

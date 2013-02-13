@@ -3,7 +3,7 @@
  *  Board API Class
  *
  *  @author R.SkuLL
- *  Copyright (c) 2013 RomerLife Geekz Web Development
+ *  Copyright 2013 RomerLife Geekz Web Development
 */
 final class Board extends Api2ch {
 
@@ -24,7 +24,7 @@ final class Board extends Api2ch {
 
             preg_match('/([0-9]+)\.dat<>(.+) .([0-9]+)/', $val, $match);
             list($dummy, $id, $title, $all) = $match;
-            $thread['thread'][$key] = array(
+            $thread['thread'][] = array(
                 'title' => $title,
                 'url' => $this->getDatURL($id),
                 'all' => $all,
